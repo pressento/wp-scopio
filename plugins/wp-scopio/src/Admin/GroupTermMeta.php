@@ -46,17 +46,19 @@ class GroupTermMeta {
 	public function render_add_field(): void {
 		?>
 		<div class="form-field">
-			<label for="scopio-cidrs"><?php esc_html_e( 'CIDR Ranges', 'wp-scopio' ); ?></label>
+			<div class="scopio-field-heading">
+				<label for="scopio-cidrs"><?php esc_html_e( 'CIDR Ranges', 'wp-scopio' ); ?></label>
+				<?php echo AdminUi::get_help_tooltip_html( __( 'CIDR examples', 'wp-scopio' ), [ '192.168.1.0/24', '10.0.0.0/8', '2001:db8::/32' ], __( 'Show example CIDR ranges', 'wp-scopio' ) ); ?>
+			</div>
 			<textarea
 				id="scopio-cidrs"
 				name="scopio_cidrs"
 				rows="5"
 				style="width:100%;font-family:monospace;"
-				placeholder="192.168.1.0/24&#10;10.0.0.0/8&#10;2001:db8::/32"
 			></textarea>
 			<?php wp_nonce_field( 'scopio_save_term_meta', 'scopio_term_meta_nonce' ); ?>
 			<p class="description">
-				<?php esc_html_e( 'Enter one CIDR range per line (e.g. 192.168.1.0/24). IPv4 and IPv6 are supported. Visitors whose IP matches any CIDR in any group assigned to a post will be able to see that post.', 'wp-scopio' ); ?>
+				<?php esc_html_e( 'Enter one CIDR range per line. IPv4 and IPv6 are supported. Use the info icon for example formats. Visitors whose IP matches any CIDR in any group assigned to a post will be able to see that post.', 'wp-scopio' ); ?>
 			</p>
 		</div>
 		<?php
@@ -74,7 +76,10 @@ class GroupTermMeta {
 		?>
 		<tr class="form-field">
 			<th scope="row">
-				<label for="scopio-cidrs"><?php esc_html_e( 'CIDR Ranges', 'wp-scopio' ); ?></label>
+				<div class="scopio-field-heading">
+					<label for="scopio-cidrs"><?php esc_html_e( 'CIDR Ranges', 'wp-scopio' ); ?></label>
+					<?php echo AdminUi::get_help_tooltip_html( __( 'CIDR examples', 'wp-scopio' ), [ '192.168.1.0/24', '10.0.0.0/8', '2001:db8::/32' ], __( 'Show example CIDR ranges', 'wp-scopio' ) ); ?>
+				</div>
 			</th>
 			<td>
 				<textarea
@@ -82,11 +87,10 @@ class GroupTermMeta {
 					name="scopio_cidrs"
 					rows="5"
 					style="width:100%;font-family:monospace;"
-					placeholder="192.168.1.0/24&#10;10.0.0.0/8&#10;2001:db8::/32"
 				><?php echo $value; // Already escaped above. ?></textarea>
 				<?php wp_nonce_field( 'scopio_save_term_meta', 'scopio_term_meta_nonce' ); ?>
 				<p class="description">
-					<?php esc_html_e( 'Enter one CIDR range per line. IPv4 and IPv6 are supported. Malformed entries are silently ignored.', 'wp-scopio' ); ?>
+					<?php esc_html_e( 'Enter one CIDR range per line. IPv4 and IPv6 are supported. Malformed entries are silently ignored. Use the info icon for example formats.', 'wp-scopio' ); ?>
 				</p>
 			</td>
 		</tr>

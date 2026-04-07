@@ -9,6 +9,7 @@ declare( strict_types=1 );
 
 namespace Pressento\Scopio;
 
+use Pressento\Scopio\Admin\AdminUi;
 use Pressento\Scopio\Admin\GroupTermMeta;
 use Pressento\Scopio\Admin\PostVisibilityMetaBox;
 use Pressento\Scopio\Admin\SettingsPage;
@@ -101,6 +102,7 @@ final class Plugin {
 
 		// Admin.
 		if ( is_admin() ) {
+			( new AdminUi() )->register();
 			( new GroupTermMeta() )->register();
 			( new PostVisibilityMetaBox( $this->visibility_service ) )->register();
 			( new SettingsPage() )->register();

@@ -91,7 +91,7 @@ class PostVisibilityMetaBox {
 							__( 'No Scopio Groups defined yet. <a href="%s">Add groups here</a>.', 'wp-scopio' ),
 							[ 'a' => [ 'href' => [] ] ]
 						),
-						esc_url( admin_url( 'edit-tags.php?taxonomy=' . GroupTaxonomy::SLUG ) )
+						esc_url( AdminUi::get_groups_admin_url() )
 					);
 					?>
 				</p>

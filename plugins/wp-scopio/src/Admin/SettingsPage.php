@@ -72,7 +72,11 @@ class SettingsPage {
 
 		add_settings_field(
 			'trusted_proxy_cidrs',
-			__( 'Trusted Proxy CIDRs', 'wp-scopio' ),
+			sprintf(
+				'%s %s',
+				esc_html__( 'Trusted Proxy CIDRs', 'wp-scopio' ),
+				AdminUi::get_help_tooltip_html( __( 'CIDR examples', 'wp-scopio' ), [ '127.0.0.1', '10.0.0.0/8', '172.16.0.0/12' ], __( 'Show example trusted proxy CIDR values', 'wp-scopio' ) )
+			),
 			[ $this, 'render_field_proxy_cidrs' ],
 			'scopio-settings',
 			'scopio_proxy_section'
@@ -80,7 +84,11 @@ class SettingsPage {
 
 		add_settings_field(
 			'trusted_ip_headers',
-			__( 'Trusted IP Headers', 'wp-scopio' ),
+			sprintf(
+				'%s %s',
+				esc_html__( 'Trusted IP Headers', 'wp-scopio' ),
+				AdminUi::get_help_tooltip_html( __( 'Header examples', 'wp-scopio' ), [ 'Forwarded', 'X-Forwarded-For', 'X-Real-IP' ], __( 'Show example trusted IP headers', 'wp-scopio' ) )
+			),
 			[ $this, 'render_field_ip_headers' ],
 			'scopio-settings',
 			'scopio_proxy_section'
@@ -152,9 +160,8 @@ class SettingsPage {
 			name="<?php echo esc_attr( self::OPTION_KEY ); ?>[trusted_proxy_cidrs]"
 			rows="4"
 			style="width:25em;font-family:monospace;"
-			placeholder="127.0.0.1&#10;10.0.0.0/8&#10;172.16.0.0/12"
 		><?php echo esc_textarea( implode( "\n", $cidrs ) ); ?></textarea>
-		<p class="description"><?php esc_html_e( 'One IP or CIDR per line. Only requests originating from these addresses will have their forwarding headers trusted.', 'wp-scopio' ); ?></p>
+		<p class="description"><?php esc_html_e( 'One IP or CIDR per line. Use the info icon for example formats. Only requests originating from these addresses will have their forwarding headers trusted.', 'wp-scopio' ); ?></p>
 		<?php
 	}
 
@@ -163,15 +170,19 @@ class SettingsPage {
 		$opts    = $this->get_options();
 		$default = [ 'Forwarded', 'X-Forwarded-For', 'X-Real-IP' ];
 		$headers = isset( $opts['trusted_ip_headers'] ) && is_array( $opts['trusted_ip_headers'] )
-			? $opts['trusted_ip_headers']
-			: $default;
+			? array_values( $opts['trusted_ip_headers'] )
+			: [];
+
+		if ( $headers === $default ) {
+			$headers = [];
+		}
 		?>
 		<textarea
 			name="<?php echo esc_attr( self::OPTION_KEY ); ?>[trusted_ip_headers]"
 			rows="4"
 			style="width:25em;font-family:monospace;"
 		><?php echo esc_textarea( implode( "\n", $headers ) ); ?></textarea>
-		<p class="description"><?php esc_html_e( 'Candidate forwarding headers in priority order, one per line. Scopio will use the first header that yields a valid IP when trusted proxy mode is active.', 'wp-scopio' ); ?></p>
+		<p class="description"><?php esc_html_e( 'Candidate forwarding headers in priority order, one per line. Leave this blank to use the default header order shown in the info tooltip. Scopio will use the first header that yields a valid IP when trusted proxy mode is active.', 'wp-scopio' ); ?></p>
 		<?php
 	}
 
