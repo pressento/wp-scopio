@@ -46,13 +46,13 @@ require_once $_tests_dir . '/includes/functions.php';
 /**
  * Manually load the plugin being tested.
  *
- * Inside the Docker test container the plugin is mounted at /app/plugin-name/
+ * Inside the Docker test container the plugin is mounted at /app/wp-scopio/
  * via the `docker-compose.test.yml` volume mapping:
- *   ./plugins/plugin-name  →  /app/plugin-name
+ *   ./plugins/wp-scopio  →  /app/wp-scopio
  * So dirname(__DIR__) resolves to /app/ and the path below is correct.
  */
 function _manually_load_plugin() {
-	require dirname( __DIR__ ) . '/plugin-name/plugin-name.php';
+	require dirname( __DIR__ ) . '/wp-scopio/wp-scopio.php';
 }
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 

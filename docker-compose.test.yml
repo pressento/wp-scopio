@@ -29,6 +29,6 @@ services:
       WP_TESTS_DIR: /tmp/wordpress-tests-lib
       WP_CORE_DIR: /tmp/wordpress
     volumes:
-      - ./plugins/plugin-name:/app/plugin-name
+      - ./plugins/wp-scopio:/app/wp-scopio
       - ./tests:/app/tests
     entrypoint: ["/bin/bash", "/app/tests/bin/run-tests.sh"]
