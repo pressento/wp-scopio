@@ -1,0 +1,46 @@
+name: Build & Release Plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install gettext (for msgfmt)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq gettext
+
+      - name: Compile MO files
+        run: |
+          cd plugins/plugin-name/languages
+          for f in *.po; do
+            [ -f "$f" ] || continue
+            msgfmt -o "${f%.po}.mo" "$f"
+          done
+
+      - name: Build plugin zip
+        run: |
+          cd plugins
+          zip -r ../plugin-name.zip plugin-name/ \
+            -x "plugin-name/.*" \
+            -x "plugin-name/node_modules/*"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-name
+          path: plugin-name.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: plugin-name.zip
+          generate_release_notes: true

@@ -1,0 +1,24 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run PHPUnit tests
+        run: docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
+
+      - name: Clean up
+        if: always()
+        run: docker compose -f docker-compose.test.yml down -v

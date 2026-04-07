@@ -1,0 +1,33 @@
+# Docker volumes & runtime data
+db_data/
+wp_data/
+
+# Uploaded files (generated at runtime)
+uploads/*
+!uploads/.gitkeep
+
+# WordPress bundled plugins (not ours)
+plugins/akismet/
+plugins/hello.php
+plugins/index.php
+
+# Environment overrides
+.env.local
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build artifacts
+*.zip
+
+# Themes (mounted, not tracked)
+themes/*
+!themes/.gitkeep
+
+# PHPUnit cache
+tests/.phpunit.result.cache

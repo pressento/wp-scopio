@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<phpunit
+	bootstrap="bootstrap.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+>
+	<testsuites>
+		<testsuite name="plugin-name">
+			<directory prefix="test-" suffix=".php">./</directory>
+		</testsuite>
+	</testsuites>
+
+	<php>
+		<env name="WP_TESTS_DIR" value="/tmp/wordpress-tests-lib" />
+		<env name="WP_CORE_DIR" value="/tmp/wordpress" />
+	</php>
+</phpunit>

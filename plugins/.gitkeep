@@ -1,0 +1,2 @@
+# This directory is mounted into the WordPress container.
+# Place your plugin directories here.

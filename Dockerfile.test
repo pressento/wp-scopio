@@ -1,0 +1,27 @@
+FROM php:8.2-cli
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    default-mysql-client \
+    subversion \
+    wget \
+    && docker-php-ext-install mysqli pdo pdo_mysql zip \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Install PHPUnit 9 (compatible with PHP 8.x and WordPress test suite)
+RUN wget -O /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-9.phar \
+    && chmod +x /usr/local/bin/phpunit
+
+WORKDIR /app
+
+# Install PHPUnit Polyfills (required by WP test suite since WP 5.9+)
+RUN composer global require --dev yoast/phpunit-polyfills:"^2.0" --no-interaction
+ENV WP_TESTS_PHPUNIT_POLYFILLS_PATH=/root/.composer/vendor/yoast/phpunit-polyfills
+
+ENTRYPOINT ["/bin/bash"]
