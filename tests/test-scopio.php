@@ -230,9 +230,6 @@ class Test_Scopio extends WP_UnitTestCase {
 	public function tearDown(): void {
 		// Flush the in-memory group cache so CIDRs updated in one test
 		// do not bleed into the next test.
-		\Pressento\Scopio\Plugin::get_instance()
-			->get_visibility_service();
-		// Access the repo via reflection to flush its cache.
 		$plugin  = \Pressento\Scopio\Plugin::get_instance();
 		$service = $plugin->get_visibility_service();
 		$ref     = new ReflectionObject( $service );

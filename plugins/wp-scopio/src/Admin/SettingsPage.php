@@ -190,7 +190,7 @@ class SettingsPage {
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Scopio Settings', 'wp-scopio' ); ?></h1>
 
-			<?php $current_tab = sanitize_key( $_GET['tab'] ?? 'proxy' ); ?>
+			<?php $current_tab = sanitize_key( wp_unslash( $_GET['tab'] ?? 'proxy' ) ); ?>
 
 			<h2 class="nav-tab-wrapper">
 				<a href="?page=scopio-settings&tab=proxy" class="nav-tab <?php echo ( 'proxy' === $current_tab || '' === $current_tab ) ? 'nav-tab-active' : ''; ?>">
