@@ -3,7 +3,7 @@
  * Plugin Name:       Scopio for WordPress
  * Plugin URI:        https://github.com/pressento/wp-scopio
  * Description:       CIDR group-based content visibility for WordPress.
- * Version:           1.0.0
+ * Version:           0.5.0
  * Requires at least: 6.0
  * Requires PHP:      8.1
  * Author:            Pressento
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SCOPIO_VERSION', '1.0.0' );
+define( 'SCOPIO_VERSION', '0.5.0' );
 define( 'SCOPIO_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SCOPIO_URL', plugin_dir_url( __FILE__ ) );
 
